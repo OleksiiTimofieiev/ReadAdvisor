@@ -16,6 +16,7 @@ import (
 const (
 	tgBotHost         = "api.telegram.org"
 	sqliteStoragePath = "/home/olekdsii/Desktop/data/sqlite/storage.db"
+	configStoragePath = "/home/olekdsii/Desktop/BackEnd/Go/src/ReadAdvisor/config.json"
 	batchSize         = 100
 )
 
@@ -50,7 +51,7 @@ func main() {
 }
 
 func getConfigs() (token string) {
-	jsonFile, err := os.Open("config.json")
+	jsonFile, err := os.Open(configStoragePath)
 	if err != nil {
 		panic("Config file was not provided")
 	}
