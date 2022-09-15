@@ -10,9 +10,11 @@ import (
 	"strconv"
 	"strings"
 
+	"ReadAdvisor/cache"
 	"ReadAdvisor/clients/telegram"
 	"ReadAdvisor/lib/e"
 	"ReadAdvisor/storage"
+
 	"time"
 )
 
@@ -21,6 +23,10 @@ const (
 	HelpCmd  = "/help"
 	StartCmd = "/start"
 	ListCmd  = "/list"
+)
+
+var (
+	postCache cache.PostCache
 )
 
 func (p *Processor) doCmd(text string, chatID int, username string) error {

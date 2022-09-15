@@ -1,3 +1,6 @@
+init:
+	sudo apt-get install redis
+
 default:
 	@ go build .
 	@ ./ReadAdvisor
