@@ -3,6 +3,8 @@ package telegram
 const (
 	getUpdatesMethod  = "getUpdates"
 	sendMessageMethod = "sendMessage"
+	setMyCommands = "setMyCommands"
+
 )
 
 type UpdatesResponse struct {

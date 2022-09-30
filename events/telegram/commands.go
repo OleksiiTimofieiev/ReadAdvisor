@@ -15,6 +15,8 @@ import (
 	"ReadAdvisor/lib/e"
 	"ReadAdvisor/storage"
 
+	"mvdan.cc/xurls/v2"
+
 	"time"
 )
 
@@ -33,6 +35,7 @@ func (p *Processor) doCmd(text string, chatID int, username string) error {
 	text = strings.TrimSpace(text)
 
 	log.Printf("got new command '%s' from '%s'", text, username)
+	// p.tg.SetMenuCommands()
 
 	if isAddCmd(text) {
 		return p.savePage(chatID, text, username)
@@ -57,9 +60,8 @@ func (p *Processor) sendListOfURL(chatID int) (err error) {
 	urls, _ := p.storage.List(context.Background())
 
 	for _, url := range urls {
-		if err := p.tg.SendMessage(chatID, url); err != nil {
-			return err
-		}
+		link := url
+		go p.tg.SendMessage(chatID, link)
 	}
 	return nil
 }
@@ -156,7 +158,14 @@ func isAddCmd(text string) bool {
 }
 
 func isURL(text string) bool {
-	u, err := url.Parse(text)
+	xurlsStrict := xurls.Strict()
+	output := xurlsStrict.FindAllString(text, -1)
+	if len(output) == 0 {
+		return false
+	}
+
+	u, err := url.Parse(output[0])
+
 	return err == nil && u.Host != ""
 }
 

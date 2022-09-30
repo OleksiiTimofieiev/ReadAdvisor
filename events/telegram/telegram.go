@@ -1,11 +1,11 @@
 package telegram
 
 import (
-	"errors"
 	"ReadAdvisor/clients/telegram"
 	"ReadAdvisor/events"
 	"ReadAdvisor/lib/e"
 	"ReadAdvisor/storage"
+	"errors"
 )
 
 type Processor struct {
@@ -67,7 +67,7 @@ func (p *Processor) processMessage(event events.Event) error {
 	if err != nil {
 		return e.Wrap("can`t process message", err)
 	}
-	if err := p.doCmd(event.Text, meta.ChatID, meta.UserName); err != nil{
+	if err := p.doCmd(event.Text, meta.ChatID, meta.UserName); err != nil {
 		return e.Wrap("can`t process message", err)
 	}
 
